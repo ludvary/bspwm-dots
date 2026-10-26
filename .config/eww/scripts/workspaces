@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Emits a JSON list of bspwm desktops whenever something changes:
+# [{"name":"1","focused":true,"occupied":true}, ...]
+
+print_ws() {
+    local focused occupied out f o
+    focused=$(bspc query -D -d focused --names 2>/dev/null)
+    occupied=$(bspc query -D -d .occupied --names 2>/dev/null)
+    out="["
+    for d in $(bspc query -D --names 2>/dev/null); do
+        f=false; o=false
+        [ "$d" = "$focused" ] && f=true
+        grep -qx "$d" <<< "$occupied" && o=true
+        out+="{\"name\":\"$d\",\"focused\":$f,\"occupied\":$o},"
+    done
+    echo "${out%,}]"
+}
+
+# loop so it recovers after `bspc wm -r`
+while true; do
+    print_ws
+    bspc subscribe desktop node_add node_remove node_transfer 2>/dev/null |
+        while read -r _; do print_ws; done
+    sleep 2
+done

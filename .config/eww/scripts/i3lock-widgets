@@ -1,0 +1,25 @@
+#!/bin/sh
+
+slowfade () {
+    dis=$(echo -n "$DISPLAY" | tr -c '[:alnum:]' _)
+    ifc='com.github.chjj.compton'
+    obj='/com/github/chjj/compton'
+    if [ "$1" = "start" ]; then
+        dbus-send --print-reply --dest=$ifc.$dis $obj $ifc.opts_set string:fade_in_step  double:0.02 2>/dev/null
+        dbus-send --print-reply --dest=$ifc.$dis $obj $ifc.opts_set string:fade_out_step double:0.02 2>/dev/null
+    else
+        dbus-send --print-reply --dest=$ifc.$dis $obj $ifc.opts_set string:fade_in_step  double:0.1 2>/dev/null
+        dbus-send --print-reply --dest=$ifc.$dis $obj $ifc.opts_set string:fade_out_step double:0.1 2>/dev/null
+    fi
+}
+
+sleep 0.1 && eww open lock-clock && eww open lock-dateuser &
+
+slowfade start
+
+i3lock -n -i $HOME/.config/eww/images/bubbles.png --bar-indicator --bar-pos "x+0:h-6" --bar-direction 1 --bar-step 12 --bar-max-height 50 --bar-base-width 2 --bar-color 00000000 --keyhl-color FF6B35ff --bshl-color ff4444ff --bar-periodic-step 15 --pass-media-keys
+
+eww close lock-clock
+eww close lock-dateuser
+
+slowfade end

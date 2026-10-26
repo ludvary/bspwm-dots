@@ -1,0 +1,199 @@
+// ═══════════════════════════════════════════════════════════════
+//  bars.scss · gruvbox · loaded from eww.scss with:   @import "bars";
+//  scoped under .bot / .side so sysmon + lock widgets keep their look
+// ═══════════════════════════════════════════════════════════════
+
+$surface:  rgba(29, 32, 33, 0.90);   // bg0_h, blurred by picom
+$hover:    rgba(212, 190, 152, 0.07);
+$stroke:   rgba(212, 190, 152, 0.08);
+$track:    rgba(212, 190, 152, 0.10);
+$text:     #d4be98;
+$sub:      #a89984;
+$dim:      #7c6f64;
+$ink:      #1d2021;
+$accent:   #89b482;   // aqua
+$accent2:  #d8a657;   // yellow
+$ok:       #a9b665;
+$warn:     #e78a4e;
+$crit:     #ea6962;
+
+$ui:   "Inter", "FiraCode Nerd Font", sans-serif;
+$icon: "FiraCode Nerd Font";
+
+// beats the global `* { font-size: 20px }` in eww.scss
+.bot *, .side * {
+  font-family: $ui;
+  font-size: 12px;
+  color: $text;
+}
+
+// ═════════════════════ bottom bar ═════════════════════
+.bot {
+  background-color: $surface;
+  border: 1px solid $stroke;
+  border-radius: 14px;
+  padding: 0 8px 0 6px;
+}
+
+// wifi
+.bot .wifi {
+  padding: 5px 10px;
+  border-radius: 9px;
+  transition: background-color 150ms ease;
+}
+.bot .wifi:hover { background-color: $hover; }
+.bot .wifi-ic   { font-family: $icon; font-size: 14px; color: $accent; }
+.bot .wifi-name { font-weight: 600; }
+.bot .wifi.off .wifi-ic,
+.bot .wifi.off .wifi-name { color: $dim; }
+
+// stats
+.bot .stat { min-width: 60px; }
+.bot .stat-name {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: $dim;
+  margin-right: 8px;
+}
+.bot .stat-val {
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+.bot .stat-bar { margin-top: 5px; }
+.bot .stat-bar trough {
+  min-height: 3px;
+  min-width: 60px;
+  border-radius: 99px;
+  background-color: $track;
+}
+.bot .stat-bar progress {
+  min-height: 3px;
+  border-radius: 99px;
+  background-color: $accent;
+}
+
+.bot .stat.warn   .stat-val              { color: $warn; }
+.bot .stat.warn   .stat-bar progress     { background-color: $warn; }
+.bot .stat.crit   .stat-val              { color: $crit; }
+.bot .stat.crit   .stat-bar progress     { background-color: $crit; }
+.bot .stat.charge .stat-name             { color: $ok; }
+.bot .stat.charge .stat-bar progress     { background-color: $ok; }
+.bot .stat.muted  .stat-val,
+.bot .stat.muted  .stat-name             { color: $dim; }
+
+.bot .sep {
+  min-width: 1px;
+  min-height: 20px;
+  background-color: $stroke;
+}
+
+// clock
+.bot .clock { padding: 0 8px; }
+.bot .clock-date {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: $sub;
+}
+.bot .clock-time {
+  font-size: 15px;
+  font-weight: 800;
+  font-feature-settings: "tnum";
+}
+
+// ═════════════════════ left rail ═════════════════════
+.side {
+  background-color: $surface;
+  border: 1px solid $stroke;
+  border-radius: 14px;
+  padding: 10px 0 12px 0;
+}
+
+// workspaces
+.side .ws {
+  min-width: 30px;
+  min-height: 26px;
+  border-radius: 9px;
+  transition: background-color 180ms ease;
+}
+.side .ws:hover { background-color: $hover; }
+.side .ws-num {
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  color: $sub;
+}
+.side .ws-dot {
+  min-width: 4px;
+  min-height: 4px;
+  border-radius: 99px;
+  background-color: $dim;
+}
+.side .ws.occupied .ws-num { color: $text; }
+.side .ws.focused { background-color: $accent; }
+.side .ws.focused .ws-num { color: $ink; font-weight: 800; }
+
+// date
+.side .date-wday,
+.side .date-mon {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.side .date-wday { color: $dim; }
+.side .date-day  { font-size: 18px; font-weight: 800; }
+.side .date-mon  { color: $accent2; }
+
+// mini stats
+.side .mini-name {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: $dim;
+}
+.side .mini-val {
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+.side .mini.warn  .mini-val { color: $warn; }
+.side .mini.crit  .mini-val { color: $crit; }
+.side .mini.muted .mini-val { color: $dim; }
+
+// wifi
+.side .side-wifi {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 9px;
+  transition: background-color 150ms ease;
+}
+.side .side-wifi:hover { background-color: $hover; }
+.side .side-wifi label { font-family: $icon; font-size: 15px; color: $accent; }
+.side .side-wifi.off label { color: $dim; }
+
+.side .side-sep {
+  min-width: 18px;
+  min-height: 1px;
+  background-color: $stroke;
+}
+
+// clock
+.side .clock-h,
+.side .clock-m {
+  font-size: 15px;
+  font-weight: 800;
+  font-feature-settings: "tnum";
+}
+.side .clock-m { color: $accent2; }
+
+// ═════════════════════ tooltips ═════════════════════
+tooltip {
+  background-color: $surface;
+  border: 1px solid $stroke;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+tooltip * {
+  color: $text;
+  font-family: $ui;
+  font-size: 12px;
+}

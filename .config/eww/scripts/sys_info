@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+PREV_TOTAL=0
+PREV_IDLE=0
+
+cpuFile="/tmp/.cpu_usage"
+
+get_cpu() {
+    if [[ -f "${cpuFile}" ]]; then
+        fileCont=$(cat "${cpuFile}")
+        PREV_TOTAL=$(echo "${fileCont}" | head -n 1)
+        PREV_IDLE=$(echo "${fileCont}" | tail -n 1)
+    fi
+    CPU=($(grep '^cpu ' /proc/stat))
+    unset CPU[0]
+    IDLE=$((CPU[4] + CPU[5]))
+    TOTAL=0
+    for VALUE in "${CPU[@]}"; do
+        ((TOTAL += VALUE))
+    done
+    if [[ -n "${PREV_TOTAL}" ]] && [[ -n "${PREV_IDLE}" ]]; then
+        ((DIFF_IDLE  = IDLE  - PREV_IDLE))
+        ((DIFF_TOTAL = TOTAL - PREV_TOTAL))
+        ((DIFF_USAGE = (1000 * (DIFF_TOTAL - DIFF_IDLE) / DIFF_TOTAL + 5) / 10))
+        echo "${DIFF_USAGE}"
+    else
+        echo "0"
+    fi
+    echo "${TOTAL}" > "${cpuFile}"
+    echo "${IDLE}"  >> "${cpuFile}"
+}
+
+get_mem() {
+
+    free -m |
+    awk '/Mem:/ {
+        printf "%.0f", ($3/$2)*100
+    }'
+}
+
+get_wifi() {
+
+    nmcli -t -f active,ssid dev wifi |
+    grep '^yes' |
+    cut -d: -f2
+}
+
+# get_bat() {
+#     cat /sys/class/power_supply/BAT0/capacity
+# }
+get_bat() { # more precision
+    awk '
+    /POWER_SUPPLY_ENERGY_NOW=/ {
+        now = substr($0, index($0, "=") + 1)
+    }
+    /POWER_SUPPLY_ENERGY_FULL=/ {
+        full = substr($0, index($0, "=") + 1)
+    }
+    END {
+        if (full > 0)
+            printf "%.2f\n", (now / full) * 100
+        else
+            print "N/A"
+    }
+    ' /sys/class/power_supply/BAT0/uevent
+}
+
+get_bat_status() {
+    # outputs: Charging, Discharging, Not Charging (AC)
+    cat /sys/class/power_supply/BAT0/status
+}
+
+get_net() {
+    nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2
+}
+
+get_temp() {
+    sensors | awk '/Tctl:/ { print $2; exit }'
+}
+
+case "$1" in
+    --cpu) get_cpu ;;
+    --mem) get_mem ;;
+    --net) get_net ;; 
+    --temp) get_temp ;;
+    --bat) get_bat ;;
+    --bat-status) get_bat_status ;;
+esac

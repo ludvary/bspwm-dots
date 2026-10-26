@@ -1,0 +1,2 @@
+;; Generated package description from .el  -*- swiperno-byte-compile: t -*-
+(define-package "swiper" "0.15.1" "Isearch with an overview.  Oh, man!" '((emacs "24.5") (ivy "0.15.1")) :commit "6f9d587e7e5250cccf1d7f67394fcc59313db755" :authors '(("Oleh Krehel" . "ohwoeowho@gmail.com")) :maintainer '("Basil L. Contovounesios" . "basil@contovou.net") :keywords '("matching") :url "https://github.com/abo-abo/swiper")

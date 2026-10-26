@@ -1,0 +1,88 @@
+#  started by bspwmrc with:  dunst -config ~/.config/dunst/dunstrc_bspwm
+
+[global]
+    monitor = 0
+    follow = none
+
+    # geometry
+    width = (300, 380)
+    height = (0, 220)
+    origin = top-right
+    offset = (16, 16)
+    notification_limit = 5
+    gap_size = 8
+
+    # look
+    corner_radius = 12
+    frame_width = 1
+    frame_color = "#3c3836"
+    separator_height = 0
+    separator_color = frame
+    padding = 14
+    horizontal_padding = 16
+    text_icon_padding = 14
+    transparency = 6
+
+    # progress bar (volume/brightness scripts that send hints get one)
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 340
+    progress_bar_corner_radius = 3
+
+    # text
+    font = Inter 10
+    line_height = 2
+    markup = full
+    format = "<span size='x-small' weight='bold' foreground='#7c6f64'>%a</span>\n<b>%s</b>\n<span foreground='#a89984'>%b</span>"
+    alignment = left
+    vertical_alignment = center
+    ellipsize = end
+    ignore_newline = no
+    show_age_threshold = 60
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+    indicate_hidden = yes
+    sort = yes
+
+    # icons
+    enable_recursive_icon_lookup = true
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 48
+    icon_corner_radius = 8
+
+    # behaviour
+    sticky_history = yes
+    history_length = 30
+    browser = /usr/bin/xdg-open
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = close_all
+    mouse_right_click = close_current
+
+[urgency_low]
+    background = "#1d2021"
+    foreground = "#d4be98"
+    frame_color = "#32302f"
+    highlight = "#7daea3"
+    timeout = 4
+
+[urgency_normal]
+    background = "#1d2021"
+    foreground = "#d4be98"
+    frame_color = "#3c3836"
+    highlight = "#89b482"
+    timeout = 6
+
+[urgency_critical]
+    background = "#1d2021"
+    foreground = "#d4be98"
+    frame_color = "#ea6962"
+    frame_width = 2
+    highlight = "#ea6962"
+    timeout = 0

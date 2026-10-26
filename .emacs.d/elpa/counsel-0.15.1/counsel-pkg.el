@@ -1,0 +1,2 @@
+;; Generated package description from .el  -*- counselno-byte-compile: t -*-
+(define-package "counsel" "0.15.1" "Various completion functions using Ivy" '((emacs "24.5") (ivy "0.15.1") (swiper "0.15.1")) :commit "72f47d4d1e6dcf89d59f5af65f365dd704efe9e5" :authors '(("Oleh Krehel" . "ohwoeowho@gmail.com")) :maintainer '("Basil L. Contovounesios" . "basil@contovou.net") :keywords '("convenience" "matching" "tools") :url "https://github.com/abo-abo/swiper")

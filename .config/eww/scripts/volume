@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Emits {"level":NN,"muted":bool} on every sink change (no polling).
+
+emit() {
+    local vol mute m
+    vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | grep -oE '[0-9]+%' | head -1 | tr -d %)
+    mute=$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{print $2}')
+    [ -z "$vol" ] && vol=0
+    [ "$mute" = "yes" ] && m=true || m=false
+    printf '{"level":%s,"muted":%s}\n' "$vol" "$m"
+}
+
+while true; do
+    emit
+    pactl subscribe 2>/dev/null |
+        grep --line-buffered -E "'change' on (sink|server)" |
+        while read -r _; do emit; done
+    sleep 2
+done

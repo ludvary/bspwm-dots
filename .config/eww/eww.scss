@@ -1,0 +1,52 @@
+* {
+  all: unset;
+
+  font-family: "FiraCode Nerd Font";
+  font-size: 20px;
+}
+
+.main {
+  /* background-color: #000000; */
+  background-color: #1c1b19;
+  color: #d8d8d8;
+  padding: 8px 10px;
+
+}
+
+.clock_win {}
+
+.clock_hour {
+  color: #FF6B35;
+  font-size: 200px;
+  font-weight: bold;
+  margin-bottom: -40px;
+}
+
+.clock_spacer {
+  color: #aaaaaa;
+  font-size: 78px;
+  margin-left: 4px;
+  margin-bottom: -40px;
+}
+
+.clock_minute {
+  color: #5FD068;
+  font-size: 200px;
+  font-weight: bold;
+}
+
+.dateuser_win {}
+
+.date_label {
+  color: #e0e0e0;
+  font-size: 50px;
+  font-family: "Latin Modern Math";
+}
+
+.user_label {
+  color: #FFD166;
+  font-size: 50px;
+  /* font-weight: bold; */
+  font-family: "Iwona Light";
+}
+@import "bars"

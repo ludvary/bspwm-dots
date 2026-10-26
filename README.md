@@ -6,7 +6,7 @@
 <p align="center">
   <img src="assets/desktop.png" width="800"/>
   <br/>
-  <i></i>
+  <i>bar is made using eww
 </p>
 
 ---

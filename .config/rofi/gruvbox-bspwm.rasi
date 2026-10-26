@@ -1,0 +1,92 @@
+/* gruvbox-bspwm.rasi · launcher for the bspwm rice */
+
+configuration {
+    show-icons:          true;
+    display-drun:        "apps";
+    display-run:         "run";
+    drun-display-format: "{name}";
+}
+
+* {
+    bg:       #1d2021f2;
+    bg-alt:   #282828;
+    bg-sel:   #32302f;
+    stroke:   #3c3836;
+    fg:       #d4be98;
+    fg-dim:   #7c6f64;
+    aqua:     #89b482;
+    yellow:   #d8a657;
+
+    background-color: transparent;
+    text-color:       @fg;
+    font:             "Inter 11";
+}
+
+window {
+    width:            560px;
+    location:         center;
+    anchor:           center;
+    background-color: @bg;
+    border:           1px;
+    border-color:     @stroke;
+    border-radius:    14px;
+    padding:          16px;
+}
+
+mainbox {
+    spacing:  12px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius:    10px;
+    padding:          10px 14px;
+    spacing:          10px;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color: @aqua;
+    font:       "Inter Bold 11";
+}
+
+entry {
+    placeholder:       "search…";
+    placeholder-color: @fg-dim;
+    cursor:            text;
+}
+
+listview {
+    lines:        8;
+    columns:      1;
+    spacing:      4px;
+    fixed-height: true;
+    scrollbar:    false;
+}
+
+element {
+    padding:       8px 12px;
+    border-radius: 9px;
+    spacing:       12px;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+element selected.normal {
+    background-color: @bg-sel;
+    text-color:       @yellow;
+}
+
+element-icon {
+    size: 22px;
+}
+
+element-text {
+    text-color:     inherit;
+    vertical-align: 0.5;
+}

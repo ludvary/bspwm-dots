@@ -1,0 +1,287 @@
+# # Colors
+# background = #000000
+# foreground = #c1c1c1
+# cursor-color = #c1c1c1
+# cursor-text = #8e8e8e
+# selection-background = #c1c1c1
+# selection-foreground = #000000
+# palette = 0=#000000
+# palette = 1=#5f8787
+# palette = 2=#fbcb97
+# palette = 3=#e78a53
+# palette = 4=#888888
+# palette = 5=#999999
+# palette = 6=#aaaaaa
+# palette = 7=#c1c1c1
+# palette = 8=#404040
+# palette = 9=#5f8787
+# palette = 10=#fbcb97
+# palette = 11=#e78a53
+# palette = 12=#888888
+# palette = 13=#999999
+# palette = 14=#aaaaaa
+# palette = 15=#c1c1c1
+
+
+## gruvbox
+background = #1d2021
+foreground = #ebdbb2
+cursor-color = #ebdbb2
+cursor-text = #1d2021
+selection-background = #665c54
+selection-foreground = #ebdbb2
+palette = 0=#1d2021
+palette = 1=#cc241d
+palette = 2=#98971a
+palette = 3=#d79921
+palette = 4=#458588
+palette = 5=#b16286
+palette = 6=#689d6a
+palette = 7=#a89984
+palette = 8=#928374
+palette = 9=#fb4934
+palette = 10=#b8bb26
+palette = 11=#fabd2f
+palette = 12=#83a598
+palette = 13=#d3869b
+palette = 14=#8ec07c
+palette = 15=#ebdbb2
+
+
+# # Colors
+# background = #090e13
+# foreground = #c5c9c7
+# cursor-color = #c5c9c7
+# cursor-text = #090e13
+# selection-background = #393b44
+# selection-foreground = #c5c9c7
+# palette = 0=#0d0c0c
+# palette = 1=#c4746e
+# palette = 2=#8a9a7b
+# palette = 3=#c4b28a
+# palette = 4=#8ba4b0
+# palette = 5=#a292a3
+# palette = 6=#8ea4a2
+# palette = 7=#c8c093
+# palette = 8=#a4a7a4
+# palette = 9=#e46876
+# palette = 10=#87a987
+# palette = 11=#e6c384
+# palette = 12=#7fb4ca
+# palette = 13=#938aa9
+# palette = 14=#7aa89f
+# palette = 15=#c5c9c7
+
+
+
+# # mellifolous
+# background = #1a1a1a
+# foreground = #dadada
+# cursor-color = #bfad9e
+# cursor-text = #1a1a1a
+# selection-background = #2d2d2d
+# selection-foreground = #c0af8c
+# palette = 0=#1a1a1a
+# palette = 1=#d29393
+# palette = 2=#b3b393
+# palette = 3=#cbaa89
+# palette = 4=#a8a1be
+# palette = 5=#b39fb0
+# palette = 6=#c0af8c
+# palette = 7=#dadada
+# palette = 8=#5b5b5b
+# palette = 9=#c95954
+# palette = 10=#828040
+# palette = 11=#a6794c
+# palette = 12=#5a6599
+# palette = 13=#9c6995
+# palette = 14=#74a39e
+# palette = 15=#ffffff
+
+
+# # Twlight
+# background = #141414
+# foreground = #ffffd4
+# cursor-color = #ffffff
+# cursor-text = #000000
+# selection-background = #313131
+# selection-foreground = #ffffd4
+# palette = 0=#141414
+# palette = 1=#c06d44
+# palette = 2=#afb97a
+# palette = 3=#c2a86c
+# palette = 4=#44474a
+# palette = 5=#b4be7c
+# palette = 6=#778385
+# palette = 7=#ffffd4
+# palette = 8=#404040
+# palette = 9=#de7c4c
+# palette = 10=#ccd88c
+# palette = 11=#e2c47e
+# palette = 12=#5a5e62
+# palette = 13=#d0dc8e
+# palette = 14=#8a989b
+# palette = 15=#ffffd4
+
+
+# Theme: Tearout
+# # Colors
+# background = #34392d
+# foreground = #f4d2ae
+# cursor-color = #d7c483
+# cursor-text = #141415
+# selection-background = #e4c47a
+# selection-foreground = #000000
+# palette = 0=#685742
+# palette = 1=#cc967b
+# palette = 2=#97976d
+# palette = 3=#6c9861
+# palette = 4=#b5955e
+# palette = 5=#c9a554
+# palette = 6=#d7c483
+# palette = 7=#b5955e
+# palette = 8=#75644f
+# palette = 9=#cc967b
+# palette = 10=#97976d
+# palette = 11=#6c9861
+# palette = 12=#b5955e
+# palette = 13=#c9a554
+# palette = 14=#d7c483
+# palette = 15=#b5955e
+
+
+
+# ## Theme: Miasma ( this looks good)
+# # Colors
+# background = #222222
+# foreground = #c2c2b0
+# cursor-color = #c7c7c7
+# cursor-text = #959595
+# selection-background = #e5c47b
+# selection-foreground = #000000
+# palette = 0=#000000
+# palette = 1=#685742
+# palette = 2=#5f875f
+# palette = 3=#b36d43
+# palette = 4=#78824b
+# palette = 5=#bb7744
+# palette = 6=#c9a554
+# palette = 7=#d7c483
+# palette = 8=#666666
+# palette = 9=#685742
+# palette = 10=#5f875f
+# palette = 11=#b36d43
+# palette = 12=#78824b
+# palette = 13=#bb7744
+# palette = 14=#c9a554
+# palette = 15=#d7c483
+
+
+# # THEME EMBER DARK
+# background = #1c1b19
+# foreground = #d8d0c0
+# cursor-color = #e08060
+# cursor-text = #1c1b19
+# selection-background = #3e3c38
+# selection-foreground = #d8d0c0
+
+# # Normal colors
+# palette = 0=#1c1b19
+# palette = 1=#e08060
+# palette = 2=#8a9868
+# palette = 3=#c8b468
+# palette = 4=#7890a0
+# palette = 5=#b07878
+# palette = 6=#80a090
+# palette = 7=#d8d0c0
+
+# # Bright colors (same as normal — Ember's muted philosophy)
+# palette = 8=#1c1b19
+# palette = 9=#e08060
+# palette = 10=#8a9868
+# palette = 11=#c8b468
+# palette = 12=#7890a0
+# palette = 13=#b07878
+# palette = 14=#80a090
+# palette = 15=#d8d0c0
+
+
+# # gruvbox material
+# # Colors
+# background = #1d2021
+# foreground = #d4be98
+# cursor-color = #ffffff
+# cursor-text = #000000
+# selection-background = #2b2c3f
+# selection-foreground = #7cfb70
+# palette = 0=#141617
+# palette = 1=#ea6926
+# palette = 2=#c1d041
+# palette = 3=#eecf75
+# palette = 4=#6da3ec
+# palette = 5=#fd9bc1
+# palette = 6=#fe9d6e
+# palette = 7=#ffffff
+# palette = 8=#4c4c4c
+# palette = 9=#d3573b
+# palette = 10=#c1d041
+# palette = 11=#eecf75
+# palette = 12=#2c86ff
+# palette = 13=#fd9bc1
+# palette = 14=#92a5df
+# palette = 15=#ffffff
+
+
+
+# Theme: Doom Peacock
+# Colors
+# background = #2b2a27
+# foreground = #ede0ce
+# cursor-color = #9c9c9d
+# cursor-text = #36312b
+# selection-background = #a60033
+# selection-foreground = #ffffff
+# palette = 0=#1c1f24
+# palette = 1=#cb4b16
+# palette = 2=#26a6a6
+# palette = 3=#bcd42a
+# palette = 4=#2a6cc6
+# palette = 5=#a9a1e1
+# palette = 6=#5699af
+# palette = 7=#ede0ce
+# palette = 8=#51504d
+# palette = 9=#ff5d38
+# palette = 10=#98be65
+# palette = 11=#e6f972
+# palette = 12=#51afef
+# palette = 13=#c678dd
+# palette = 14=#46d9ff
+# palette = 15=#dfdfdf
+
+
+# Window
+window-theme = ghostty
+window-decoration = none
+font-family = "Martian Mono"
+font-size = 12.5
+adjust-cell-height = 30%
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Linux
+gtk-titlebar = false
+gtk-wide-tabs = false
+
+#keybinds
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+l=goto_split:right
+keybind = ctrl+j=goto_split:down
+keybind = ctrl+k=goto_split:up
+
+keybind = ctrl+shift+super+l=resize_split:right,10
+keybind = ctrl+shift+super+h=resize_split:right,10
+keybind = ctrl+shift+super+j=resize_split:down,10
+keybind = ctrl+shift+super+k=resize_split:up,10
+
+window-save-state = always

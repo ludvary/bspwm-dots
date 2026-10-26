@@ -1,0 +1,147 @@
+;; ═══════════════════════════════════════════════════════════════
+;;  bars.yuck · bottom stats bar + left rail  (bspwm)
+;;  loaded from eww.yuck with:   (include "./bars.yuck")
+;;  reuses polls from eww.yuck: cpu mem net temp bat bat_status
+;; ═══════════════════════════════════════════════════════════════
+
+;; ── data ────────────────────────────────────────────────────────
+(defpoll bar_hm   :interval "5s"  `date +%H:%M`)
+(defpoll bar_hh   :interval "5s"  `date +%H`)
+(defpoll bar_mm   :interval "5s"  `date +%M`)
+(defpoll bar_wday :interval "60s" `date +%^a`)
+(defpoll bar_day  :interval "60s" `date +%d`)
+(defpoll bar_mon  :interval "60s" `date +%^b`)
+(defpoll bar_mem_gb    :interval "2s"  `free -b | awk '/^Mem:/ {printf "%.1f", $3/1073741824}'`)
+(defpoll bar_mem_total :interval "60s" `free -b | awk '/^Mem:/ {printf "%.1f", $2/1073741824}'`)
+
+(deflisten bar_ws  :initial "[]"
+  `~/.config/eww/scripts/workspaces`)
+(deflisten bar_vol :initial '{"level":0,"muted":false}'
+  `~/.config/eww/scripts/volume`)
+
+;; ── bottom bar pieces ───────────────────────────────────────────
+;; a stat = small caps name + value, with a hairline meter under it
+(defwidget stat [name text value state tip]
+  (box :class "stat ${state}" :orientation "v" :space-evenly false
+       :valign "center" :tooltip tip
+    (box :class "stat-top" :space-evenly false
+      (label :class "stat-name" :text name)
+      (label :class "stat-val" :hexpand true :xalign 1 :text text))
+    (progress :class "stat-bar" :value value :orientation "h")))
+
+(defwidget sep []
+  (box :class "sep" :valign "center"))
+
+(defwidget bottombar []
+  (centerbox :class "bot" :orientation "h"
+    (box :halign "start" :space-evenly false
+      (button :class "wifi ${net == '' ? 'off' : ''}"
+              :onclick "bash ~/.config/eww/scripts/wifi.sh &"
+              :tooltip "click to pick a network"
+        (box :space-evenly false :spacing 8
+          (label :class "wifi-ic" :text {net == "" ? "󰖪" : "󰖩"})
+          (label :class "wifi-name" :limit-width 14 :text {net == "" ? "offline" : net}))))
+
+    (box :halign "center" :space-evenly false :spacing 16
+      (stat :name "CPU" :text "${cpu}%" :value cpu :tip "cpu usage"
+            :state {cpu >= 85 ? "crit" : cpu >= 60 ? "warn" : ""})
+      (sep)
+      ;; (stat :name "RAM" :text "${mem}%" :value mem :tip "memory usage"
+      ;;       :state {mem >= 90 ? "crit" : mem >= 75 ? "warn" : ""})
+      (stat :name "RAM" :text "${bar_mem_gb}G" :value mem
+            :tip "memory ${bar_mem_gb} / ${bar_mem_total} GB"
+            :state {mem >= 90 ? "crit" : mem >= 75 ? "warn" : ""})
+      (sep)
+      (stat :name "TEMP"
+            :text "${round(replace(temp, '[^0-9.]', ''), 0)}°"
+            :value {replace(temp, "[^0-9.]", "")}
+            :tip "cpu temp ${temp}"
+            :state {replace(temp, "[^0-9.]", "") >= 85 ? "crit" : replace(temp, "[^0-9.]", "") >= 70 ? "warn" : ""})
+      (sep)
+      (stat :name {bat_status == "Charging" ? "CHG" : "BAT"}
+            :text "${round(bat, 0)}%"
+            :value bat
+            :tip "battery ${bat}% · ${bat_status}"
+            :state {bat_status == "Charging" ? "charge" : bat <= 15 ? "crit" : bat <= 30 ? "warn" : ""})
+      (sep)
+      (eventbox :onscroll "[ {} = up ] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ -5%"
+                :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        (stat :name {bar_vol.muted ? "MUTE" : "VOL"}
+              :text "${bar_vol.level}%"
+              :value {bar_vol.muted ? 0 : bar_vol.level}
+              :tip "scroll to change · click to mute"
+              :state {bar_vol.muted ? "muted" : ""})))
+
+    (box :halign "end" :space-evenly false :spacing 10 :class "clock"
+      (label :class "clock-date" :text "${bar_wday} ${bar_day}")
+      (label :class "clock-time" :text bar_hm))))
+
+;; ── left rail pieces ────────────────────────────────────────────
+(defwidget workspaces []
+  (eventbox :onscroll "~/.config/bspwm/scripts/ws-switch $([ {} = up ] && echo prev.local || echo next.local)"
+    (box :class "ws-list" :orientation "v" :space-evenly false :spacing 4 :halign "center"
+      (for d in bar_ws
+        (button :class "ws ${d.focused ? 'focused' : d.occupied ? 'occupied' : 'empty'}"
+                :halign "center"
+                :onclick "~/.config/bspwm/scripts/ws-switch '${d.name}'"
+                :tooltip "desktop ${d.name}"
+          (box :halign "center" :valign "center"
+            (label :class "ws-num" :visible {d.focused || d.occupied} :text {d.name})
+            (box :class "ws-dot" :visible {!(d.focused || d.occupied)})))))))
+
+(defwidget mini [name text state tip]
+  (box :class "mini ${state}" :orientation "v" :space-evenly false :tooltip tip
+    (label :class "mini-name" :text name)
+    (label :class "mini-val" :text text)))
+
+(defwidget sidebar []
+  (centerbox :class "side" :orientation "v"
+    (box :valign "start" :orientation "v" :space-evenly false
+      (workspaces))
+
+    (box :class "side-date" :valign "center" :orientation "v" :space-evenly false
+      (label :class "date-wday" :text bar_wday)
+      (label :class "date-day"  :text bar_day)
+      (label :class "date-mon"  :text bar_mon))
+
+    (box :class "side-bot" :valign "end" :orientation "v" :space-evenly false :spacing 14
+      (mini :name "CPU" :text "${cpu}" :tip "cpu ${cpu}%"
+            :state {cpu >= 85 ? "crit" : cpu >= 60 ? "warn" : ""})
+      (mini :name "TMP" :text "${round(replace(temp, '[^0-9.]', ''), 0)}" :tip "temp ${temp}"
+            :state {replace(temp, "[^0-9.]", "") >= 85 ? "crit" : replace(temp, "[^0-9.]", "") >= 70 ? "warn" : ""})
+      (eventbox :onscroll "[ {} = up ] && pactl set-sink-volume @DEFAULT_SINK@ +5% || pactl set-sink-volume @DEFAULT_SINK@ -5%"
+                :onclick "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        (mini :name {bar_vol.muted ? "MUTE" : "VOL"} :text "${bar_vol.level}"
+              :tip "scroll to change · click to mute"
+              :state {bar_vol.muted ? "muted" : ""}))
+      (button :class "side-wifi ${net == '' ? 'off' : ''}" :halign "center"
+              :onclick "bash ~/.config/eww/scripts/wifi.sh &"
+              :tooltip {net == "" ? "offline" : net}
+        (label :text {net == "" ? "󰖪" : "󰖩"}))
+      (box :class "side-sep" :halign "center")
+      (box :class "side-clock" :orientation "v" :space-evenly false
+        (label :class "clock-h" :text bar_hh)
+        (label :class "clock-m" :text bar_mm)))))
+
+;; ── windows ─────────────────────────────────────────────────────
+;; bottombar: a floating bspwm window (super + drag to move it)
+;; sidebar: unmanaged; toggle.sh sets bspwm padding so windows make room
+(defwindow bottombar
+  :monitor 0
+  :geometry (geometry :x "0px" :y "10px"
+                      :width "40%" :height "46px"
+                      :anchor "bottom center")
+  :windowtype "normal"
+  :wm-ignore false
+  :focusable false
+  (bottombar))
+
+(defwindow sidebar
+  :monitor 0
+  :geometry (geometry :x "10px" :y "0px"
+                      :width "50px" :height "97%"
+                      :anchor "center left")
+  :stacking "fg"
+  :wm-ignore true
+  :focusable false
+  (sidebar))

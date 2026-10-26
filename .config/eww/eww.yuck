@@ -1,0 +1,116 @@
+(include "./bars.yuck")
+(defpoll cpu :interval "1s"
+  `~/.config/eww/scripts/sys_info --cpu`)
+(defpoll mem :interval "2s"
+  `~/.config/eww/scripts/sys_info --mem`)
+(defpoll net :interval "3s"
+  `~/.config/eww/scripts/sys_info --net`)
+(defpoll temp :interval "1s"
+  `~/.config/eww/scripts/sys_info --temp`)
+(defpoll bat :interval "5s"
+  `~/.config/eww/scripts/sys_info --bat`)
+(defpoll bat_status :interval "5s"
+  `~/.config/eww/scripts/sys_info --bat-status`)
+(defpoll time :interval "1s"
+  ;; `date '+%a %b %d %H:%M:%S %Y'`)
+  `date '+%a %b %d %H:%M'`)
+
+(defwindow sysmon
+  :geometry (geometry
+    :x "1550px"
+    :y "30px"
+    :width "260px"
+    :height "210px")
+  :focusable true
+  :windowtype "normal"
+  :wm-ignore false
+  (box
+    :orientation "v"
+    :class "main"
+    :space-evenly false
+    :valign "start"
+
+    (label :class "title" :xalign 0.5 :text "  ~ itty-bitty system monitor ~")
+
+    (label :class "divider" :xalign 0 :text "")
+
+    (box :class "row" :orientation "h" :space-evenly false :halign "start"
+      (label :class "icon cpu"  :text "  ")
+      (label :class "key"       :text "cpu       | ")
+      (label :class "val"       :text "${cpu}%"))
+
+    (box :class "row" :orientation "h" :space-evenly false :halign "start"
+      ;; (label :class "icon mem"  :text "   ")  ;; for some reason that icon isnt rendering properly wtf?????
+      (label :class "icon mem"  :text "󰾶  ")
+
+      (label :class "key"       :text "mem    | ")
+      (label :class "val"       :text "${mem}%"))
+
+    (box :class "row" :orientation "h" :space-evenly false :halign "start"
+      (label :class "icon bat"  :text {bat_status == "Charging" ? "󰂄  " : bat_status == "Full" ? "󰁹  " : "󱊡  "})
+      (label :class "key"       :text {bat_status == "Charging" ? "pwr       | " : bat_status == "Full" ? "full    | " : "battery |  "})
+      (label :class "val"       :text "${bat}%"))
+
+    (box :class "row" :orientation "h" :space-evenly false :halign "start"
+      (label :class "icon time" :text "󱑒  ")
+      (label :class "key"       :text "time      |  ")
+      (label :class "val"       :text "${time}"))
+
+    (button
+      :onclick "bash ~/.config/eww/scripts/wifi.sh &"
+      (box :class "row" :orientation "h" :space-evenly false :halign "start"
+        (label :class "icon net"  :text "  ")
+        (label :class "key"       :text "wifi         | ")
+        (label :class "val"       :text "${net}")))
+
+    (box :class "row" :orientation "h" :space-evenly false :halign "start"
+      (label :class "icon temp" :text "  ")
+      (label :class "key"       :text "temp     |  ")
+      (label :class "val"       :text "${temp}"))
+  )
+)
+
+(defpoll lock_hour          :interval "1s"  "date +%H")
+(defpoll lock_minute        :interval "1s"  "date +%M")
+(defpoll lock_seconds :interval "1s" "date +%S")
+(defpoll lock_date          :interval "30s" "date +'%A, %-d %B'")
+(defpoll lock_username      :interval "0s"  "echo $USER")
+
+(defwidget lock-clock []
+  (box :class "clock_win"
+       :orientation "v"
+       :space-evenly false
+    (label :class "clock_hour"   :text lock_hour)
+    (label :class "clock_spacer" :text lock_seconds)
+    (label :class "clock_minute" :text lock_minute)))
+
+(defwidget lock-dateuser []
+  (box :class "dateuser_win"
+       :orientation "v"
+       :space-evenly false
+       :halign "center"
+    (label :class "date_label" :text lock_date)
+    (label :class "user_label" :text " ${lock_username}")))
+
+(defwindow lock-clock
+  :monitor 0
+  :stacking "fg"
+  :focusable false
+  :geometry (geometry :x "30px"
+                      :y "180px"
+                      :width "160px"
+                      :height "850px"
+                      :anchor "bottom left")
+  (lock-clock))
+
+(defwindow lock-dateuser
+  :monitor 0
+  :stacking "fg"
+  :focusable false
+  :geometry (geometry :x "00%"
+                      :y "77%"
+                      :width "280px"
+                      :height "80px"
+                      :anchor "top center")
+  (lock-dateuser))
+

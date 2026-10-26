@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# rail-autohide · hide the eww side rail while the focused desktop has a fullscreen window, bring it back afterwards. Only touches the rail if it was open, so closing it yourself with super+v still sticks.
+
+flag="${XDG_RUNTIME_DIR:-/tmp}/eww-rail-autohidden"
+
+check() {
+    if bspc query -N -d focused -n '.fullscreen.window' >/dev/null 2>&1; then
+        if eww active-windows 2>/dev/null | grep -q '^sidebar:'; then
+            eww close sidebar && touch "$flag"
+        fi
+    elif [ -e "$flag" ]; then
+        rm -f "$flag"
+        eww open sidebar
+    fi
+}
+
+check
+bspc subscribe node_state desktop_focus node_add node_remove node_transfer |
+    while read -r _; do check; done

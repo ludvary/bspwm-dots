@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# ws-switch <desktop>   e.g.  ws-switch '^3' | 3 | next.local | prev.local | last
+# Tags windows with the switch direction so picom slides them like side-by-side panes (forward = new desktop comes in from the right).
+
+target=$(bspc query -D -d "$1" 2>/dev/null) || exit 0
+current=$(bspc query -D -d focused)
+[ "$target" = "$current" ] && exit 0
+
+order=$(bspc query -D -m focused)
+ci=$(grep -nx "$current" <<< "$order" | cut -d: -f1)
+ti=$(grep -nx "$target"  <<< "$order" | cut -d: -f1)
+
+dir=1
+[ -n "$ci" ] && [ -n "$ti" ] && [ "$ti" -lt "$ci" ] && dir=0
+
+for w in $(bspc query -N -d "$current" -n '.window.!sticky') \
+         $(bspc query -N -d "$target"  -n '.window.!sticky'); do
+    xprop -id "$w" -f _BSPWM_SLIDE 32c -set _BSPWM_SLIDE "$dir" 2>/dev/null
+done
+
+bspc desktop -f "$target"

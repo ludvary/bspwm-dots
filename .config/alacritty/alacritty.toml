@@ -1,0 +1,27 @@
+[general]
+import =  [
+    # "/home/bread/.config/alacritty/colors.toml",
+    "/home/ludvary/.config/alacritty/themes/ember.toml",
+]
+
+live_config_reload = true
+
+[terminal]
+shell = { program = "/bin/zsh", args = ["-l",] }
+
+[window]
+dimensions = { columns = 48, lines = 16 }
+padding = { x = 14, y = 14 }
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = { shape = "Block", blinking = "Always" }
+blink_interval = 500
+
+[font]
+size = 14.5
+# normal = { family = "Victor Mono", style = "Regular" }
+normal = { family = "Adwaita Mono", style = "Regular" }
+
